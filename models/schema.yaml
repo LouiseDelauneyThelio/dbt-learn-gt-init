@@ -1,0 +1,15 @@
+models:
+  - name: customers
+    description: One record per customer with aggregated order info
+    columns:
+      - name: customer_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "Customer's first name"
+      - name: last_name
+        description: "Customer's last name"
+      - name: number_of_orders
+        description: Count of orders placed by this customer
