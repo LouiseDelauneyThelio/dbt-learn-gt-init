@@ -1,15 +1,57 @@
 models:
   - name: customers
     description: One record per customer with aggregated order info
+    semantic_model:
+      enabled: true
+    agg_time_dimension: first_order_date
     columns:
       - name: customer_id
         description: Primary key
         tests:
           - unique
           - not_null
+        entity:
+          type: primary
+          name: customer
       - name: first_name
         description: "Customer's first name"
+        dimension:
+          type: categorical
       - name: last_name
         description: "Customer's last name"
+        dimension:
+          type: categorical
+      - name: first_order_date
+        description: Date of the customer's first order
+        granularity: day
+        dimension:
+          type: time
+      - name: most_recent_order_date
+        description: Date of the customer's most recent order
+        granularity: day
+        dimension:
+          type: time
       - name: number_of_orders
         description: Count of orders placed by this customer
+    metrics:
+      - name: customer_count
+        description: Count of customers, attributed to their first order date.
+        type: simple
+        label: Customer Count
+        agg: count
+        expr: 1
+      - name: total_customer_orders
+        description: Sum of customer lifetime order counts, attributed to each customer's first order date.
+        type: simple
+        label: Total Customer Orders
+        agg: sum
+        expr: number_of_orders
+
+
+  - name: time_spine_daily
+    description: Daily calendar used by MetricFlow for time-based metric queries.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
