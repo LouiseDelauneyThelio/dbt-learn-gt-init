@@ -1,29 +1,65 @@
-models: 
+models:
+  - name: customers
+    description: One record per customer with aggregated order info
+    semantic_model:
+      enabled: true
+    agg_time_dimension: first_order_date
+    columns:
+      - name: customer_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+        entity:
+          type: primary
+          name: customer
 
-  - name: customers 
+      - name: first_name
+        description: "Customer's first name"
+        dimension:
+          type: categorical
 
-    description: One record per customer with aggregated order info 
+      - name: last_name
+        description: "Customer's last name"
+        dimension:
+          type: categorical
 
-    columns: 
+      - name: first_order_date
+        description: Date of the customer's first order
+        granularity: day
+        dimension:
+          type: time
 
-      - name: customer_id 
+      - name: most_recent_order_date
+        description: Date of the customer's most recent order
+        granularity: day
+        dimension:
+          type: time
 
-        description: Primary key 
+      - name: number_of_orders
+        description: Count of orders placed by this customer
 
-        tests: 
+    metrics:
+      - name: customer_count
+        description: Count of customers
+        type: simple
+        label: Customer Count
+        agg: count_distinct
+        expr: customer_id
 
-          - unique 
+      - name: total_customer_orders
+        description: Total orders placed by customers
+        type: simple
+        label: Total Customer Orders
+        agg: sum
+        expr: number_of_orders
 
-          - not_null 
 
-      - name: first_name 
-
-        description: "Customer's first name" 
-
-      - name: last_name 
-
-        description: "Customer's last name" 
-
-      - name: number_of_orders 
-
-        description: Count of orders placed by this customer 
+  - name: time_spine_daily
+    description: Daily time spine for Semantic Layer metric queries
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        description: Calendar date at daily grain
+        granularity: day
