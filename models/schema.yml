@@ -13,3 +13,47 @@ models:
         description: "Customer's last name"
       - name: number_of_orders
         description: Count of orders placed by this customer
+
+  - name: stg_orders
+    description: One record per order, including completed, returned, and cancelled orders.
+    semantic_model:
+      enabled: true
+      name: orders
+    agg_time_dimension: order_date
+    columns:
+      - name: order_id
+        description: Primary key for an order.
+        entity:
+          type: primary
+          name: order_id
+      - name: customer_id
+        description: Customer that placed the order.
+        entity:
+          type: foreign
+          name: customer
+      - name: order_date
+        description: Date the order was placed.
+        granularity: day
+        dimension:
+          type: time
+      - name: status
+        description: Current order status.
+        dimension:
+          type: categorical
+    metrics:
+      - name: order_count
+        description: Number of distinct orders placed.
+        label: Order Count
+        type: simple
+        agg: count_distinct
+        expr: order_id
+
+
+  - name: time_spine_daily
+    description: Day-grain calendar used by the semantic layer for time-based metric queries.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        description: Calendar date at day grain.
+        granularity: day
