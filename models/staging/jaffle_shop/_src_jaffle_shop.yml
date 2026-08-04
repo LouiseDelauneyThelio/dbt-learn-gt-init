@@ -8,11 +8,11 @@ sources:
           config:
             freshness:
               warn_after: 
-                count: 12
-                period: hour
+                count: 365
+                period: day
               error_after: 
-                count: 24
-                period: hour
+                count: 700
+                period: day
             loaded_at_field: _etl_loaded_at
               
               
