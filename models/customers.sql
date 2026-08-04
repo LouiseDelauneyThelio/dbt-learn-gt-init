@@ -20,7 +20,7 @@ orders as (
     from raw.jaffle_shop.orders
 
 ),
-
+-- hi
 customer_orders as (
 
     select
