@@ -1,0 +1,16 @@
+sources:
+  - name: jaffle_shop
+    schema: jaffle_shop
+    database: raw
+    tables:
+      - name: customers
+      - name: orders
+        config: 
+          freshness:
+            warn_after:
+              count: 365 # "We expect data every 12 hours;" send an error after 12 hours
+              period: day # Possible fields: second, minute, hour, day
+            error_after:
+              count: 730 # Stop the line if no data after determined period
+              period: day
+          loaded_at_field: _etl_loaded_at
