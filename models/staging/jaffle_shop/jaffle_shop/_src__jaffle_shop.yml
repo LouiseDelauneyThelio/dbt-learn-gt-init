@@ -1,9 +1,18 @@
 sources:
   - name: jaffle_shop
+    description: Replica of PostGres database
     schema: jaffle_shop
     database: raw
     tables:
       - name: customers
+        description: Table of customer deets
+        columns:
+          - name: id
+            description: Primary key for customer table
+            data_tests:
+              - unique
+              - not_null
+              
       - name: orders
         config: 
           freshness:
