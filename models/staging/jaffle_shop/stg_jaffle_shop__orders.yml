@@ -2,7 +2,7 @@ models:
   - name: stg_jaffle_shop__orders
     description: One record per order
     columns:
-      - name: status
+      - name: order_status
         description: this might bea longer description
         data_tests:
           - accepted_values:
