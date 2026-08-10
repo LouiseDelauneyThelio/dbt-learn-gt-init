@@ -1,0 +1,8 @@
+models:
+  - name : dim_customers
+    description: Dimension model of customers
+    columns:
+      - name: number_of_orders
+        description: Calculated column coalesce(customer_orders.number_of_orders, 0)
+      - name: last_name
+        description: "{{ doc('last_name') }}"

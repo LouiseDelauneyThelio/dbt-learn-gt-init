@@ -1,10 +1,21 @@
 sources:
   - name: jaffle_shop
+    description: Source data comes from Jaffle Shop
     database: raw
     schema: jaffle_shop
     tables:
       - name: customers
+        description: Customers dataset where one row represents one customer
+        columns:
+          - name: id
+            data_tests:
+              - not_null
+              - unique
+          - name: last_name
+            description: "{{ doc('last_name') }}"
+
       - name: orders
+        description: Orders dataset where one row represents one order
         config:
           freshness:
             warn_after:
@@ -23,9 +34,11 @@ sources:
             data_tests:
               - not_null
               - relationships:
-                  to: source('jaffle_shop', 'customers')
-                  field: id
+                  arguments:
+                    to: source('jaffle_shop', 'customers')
+                    field: id
           - name: status
             data_tests:
               - accepted_values:
-                  values: ['completed', 'returned', 'return_pending', 'placed', 'shipped']
+                  arguments:
+                    values: ['completed', 'returned', 'return_pending', 'placed', 'shipped']

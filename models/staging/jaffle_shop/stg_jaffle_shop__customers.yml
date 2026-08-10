@@ -1,12 +1,15 @@
 models:
   - name: stg_jaffle_shop__customers
+    description: Customers staging model doing light renaming
     columns:
       - name: customer_id
+        description: Primary key for jaffle shop
         data_tests:
           - not_null
           - unique
 
       - name: first_name
+        description: First name column for the jaffle shop source
         data_tests:
           - not_null:
               config:
@@ -14,5 +17,6 @@ models:
                 warn_if: ">50"
 
       - name: last_name
+        description: "{{ doc('last_name') }}"
         data_tests:
           - not_null
