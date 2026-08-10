@@ -1,11 +1,14 @@
 sources:
   - name: jaffle_shop
+    description: source data comes from jaffle shop
     database: raw
     schema: jaffle_shop
     tables:
       - name: customers
+        description: customers dataset where one row per customer
         # identifier: customer132323444442332
       - name: orders
+        description: orders dataset where one row per customer
         config: 
           freshness:
             warn_after:
@@ -17,10 +20,12 @@ sources:
           loaded_at_field: _etl_loaded_at
         columns:
           - name: id
+            description: unique id of the order
             data_tests:
               - not_null
               - unique    
           - name: user_id
+            description: unique id of the customer
             data_tests:
               - not_null
               - relationships:
