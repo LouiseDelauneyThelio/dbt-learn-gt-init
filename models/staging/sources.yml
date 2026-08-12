@@ -1,10 +1,13 @@
 sources:
   - name: jaffle_shop
+    description: Source data comes from Jaffle shop
     schema: jaffle_shop
     database: raw
     tables:
       - name: customers
+        description: customer dataset where one row represents a customer
       - name: orders
+        description: order dataset where one row represents an order
         config:   
           freshness:
             warn_after:
